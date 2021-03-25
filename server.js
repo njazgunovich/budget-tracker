@@ -15,14 +15,14 @@ app.use(express.json());
 
 app.use(express.static("public"));
 
-mongoose.connect("mongodb://localhost/budget", {
-  useNewUrlParser: true,
-  useFindAndModify: false
+mongoose.connect(`mongodb+srv://dbNicholas:${process.env.MONGODB_PW}@cluster0.7njwy.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`, {
+    useNewUrlParser: true,
+    useFindAndModify: false
 });
 
 // routes
 app.use(require("./routes/api.js"));
 
 app.listen(PORT, () => {
-  console.log(`App running on port ${PORT}!`);
+    console.log(`App running on port ${PORT}!`);
 });
