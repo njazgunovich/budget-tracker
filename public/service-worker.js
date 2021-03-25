@@ -40,6 +40,7 @@ self.addEventListener("fetch", function(evt) {
     if (evt.request.url.includes("/api/")) {
         evt.respondWith(
             caches.open(DATA_CACHE_NAME).then(cache => {
+                const requestClone = evt.request.clone()
                 return fetch(evt.request)
                     .then(response => {
                         // If the response was good, clone it and store it in the cache.
@@ -49,6 +50,7 @@ self.addEventListener("fetch", function(evt) {
                         return response;
                     })
                     .catch(err => {
+                        cache.put(Math.random().toString(36), requestClone);
                         // Network request failed, try to get it from the cache.
                         return cache.match(evt.request);
                     });
